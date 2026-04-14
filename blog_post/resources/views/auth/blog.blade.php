@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - {{ config('app.name', 'Laravel') }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .card { backdrop-filter: blur(10px); background: rgba(255,255,255,0.9); }
+        .tox-tinymce { border-radius: 0.375rem; }
+    </style>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card p-5 shadow-lg" style="max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto;">
+        <div class="text-center mb-4">
+            <h1 class="display-4 fw-bold text-primary mb-3">Create New Blog Post</h1>
+            <p class="lead text-muted">Hello, {{ Auth::user()->name }}!</p>
+        </div>
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        <form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+              <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
+                @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" required>
+                @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="slug" class="form-label">Slug</label>
+                <div class="input-group">
+                    <span class="input-group-text">/blog/</span>
+                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}">
+                    <button class="btn btn-outline-secondary" type="button" id="generateSlug">Generate</button>
+                </div>
+                <div class="form-text">Leave empty for auto-generate from title, or enter custom.</div>
+                @error('slug') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+            </div>
+
+            <script>
+            document.getElementById('title').addEventListener('input', function() {
+                document.getElementById('generateSlug').click();
+            });
+            document.getElementById('generateSlug').addEventListener('click', function() {
+                const title = document.getElementById('title').value;
+                if (title) {
+                    fetch('{{ route('blog.slug') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({title: title})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('slug').value = data.slug;
+                    });
+                }
+            });
+            </script>
+            <meta name="csrf-token" content="{{ csrf_token() }}"> 
+
+            <div class="mb-3">
+                <label for="author" class="form-label">Author</label>
+                <input type="text" class="form-control @error('author') is-invalid @enderror" id="author" name="author" value="{{ old('author') }}" placeholder="Enter author name" required>
+                @error('author')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Content (HTML Editor)</label>
+                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="15">{{ old('content') }}</textarea>
+                <div class="form-text">Enter HTML code for rich content with headings, links, etc.</div>
+                @error('content') <div class="text-danger">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Link Modal -->
+            <div class="modal fade" id="linkModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Insert Link</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-dialog">
+                            <div class="input-group">
+                                <input type="url" class="form-control" id="linkUrl" placeholder="https://example.com">
+                                <button class="btn btn-primary" id="insertLink">Insert</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input @error('status') is-invalid @enderror" type="radio" name="status" id="draft" value="draft" {{ old('status', 'draft') == 'draft' ? 'checked' : '' }}>
+                    <label class="form-check-label" for="draft">Draft</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input @error('status') is-invalid @enderror" type="radio" name="status" id="published" value="published" {{ old('status') == 'published' ? 'checked' : '' }}>
+                    <label class="form-check-label" for="published">Published</label>
+                </div>
+                @error('status') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                <a href="{{ route('blogs.index') }}" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-list-ul me-2"></i>View Blogs
+                </a>
+                <a href="{{ route('logout') }}" class="btn btn-outline-secondary btn-lg"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-save"></i> Save Blog Post
+                </button>
+            </div>
+        </form>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+    </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
