@@ -6,12 +6,14 @@
     <title>Blogs - {{ config('app.name', 'Laravel') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <style>
-        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        body { background: whitesmoke; min-height: 100vh; }
         .card { backdrop-filter: blur(10px); background: rgba(255,255,255,0.95); transition: transform 0.2s; }
         .card:hover { transform: translateY(-5px); }
         .excerpt { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-        .section-title { color: rgba(255,255,255,0.95); border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .section-title { color: black; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 1rem; margin-bottom: 2rem; }
         .list-card { backdrop-filter: blur(20px); background: rgba(255,255,255,0.15); max-width: 1400px; width: 100%; max-height: 90vh; overflow-y: auto; }
     </style>
 </head>
@@ -19,13 +21,13 @@
     <div class="card list-card shadow-xl rounded-4">
         <div class="col-lg-10 mx-auto p-4 p-md-5">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="display-4 fw-bold text-white mb-0">
+                <h1 class="display-4 fw-bold text-black mb-0">
                     <i class="bi bi-rss me-3"></i>My Blogs
                 </h1>
                 <a href="{{ route('blog') }}" class="btn btn-primary btn-lg me-2">
                     <i class="bi bi-plus-circle me-2"></i>New Post
                 </a>
-<a href="{{ route('blogs.all') }}" class="btn btn-outline-light btn-lg">
+<a href="{{ route('blogs.all') }}" class="btn btn-outline-dark text-black  btn-lg">
                     <i class="bi bi-globe me-2"></i>All Users Blogs
                 </a>
             </div>
@@ -39,13 +41,13 @@
 
             {{-- Filter Buttons --}}
             <div class="btn-group w-100 mb-5 justify-content-center" role="group">
-                <button type="button" class="btn btn-outline-light btn-lg filter-btn section-active" data-target="all-section">
+                <button type="button" class="btn btn-outline-dark text-black  btn-lg filter-btn section-active" data-target="all-section">
                     <i class="bi bi-list-ul me-2"></i>All <span class="badge bg-light text-dark ms-1" id="all-count">{{ $allBlogs->total() }}</span>
                 </button>
-                <button type="button" class="btn btn-outline-light btn-lg filter-btn" data-target="published-section">
+                <button type="button" class="btn btn-outline-dark text-black  btn-lg filter-btn" data-target="published-section">
                     <i class="bi bi-check-circle me-2 text-success"></i>Published <span class="badge bg-success ms-1" id="published-count">{{ $publishedBlogs->total() }}</span>
                 </button>
-                <button type="button" class="btn btn-outline-light btn-lg filter-btn" data-target="draft-section">
+                <button type="button" class="btn btn-outline-dark text-black  btn-lg filter-btn" data-target="draft-section">
                     <i class="bi bi-file-earmark-text me-2 text-secondary"></i>Drafts <span class="badge bg-secondary ms-1" id="draft-count">{{ $draftedBlogs->total() }}</span>
                 </button>
             </div>
@@ -71,7 +73,7 @@
                                         </div>
                                     @endif
                                     
-                                        <p class="card-text text-muted excerpt">{{ Str::limit(strip_tags($blog->content), 150) }}</p>
+                                        <p class="card-text text-muted excerpt">{{ Str::limit($blog->content, 150) }}</p>
                                         <div class="mt-auto">
                                             <small class="text-muted mb-2 d-block">
                                                 By {{ $blog->author }}<br>
@@ -133,6 +135,7 @@
                         @foreach($publishedBlogs as $blog)
                             <div class="col-md-6 col-lg-4">
                                 <div class="card h-100 shadow-lg">
+                                    <h5 class="card-title fw-bold">{{ $blog->title }}</h5>
                                     @if($blog->image)
                                         <img src="{{ Storage::url($blog->image) }}" class="card-img-top w-100 h-100 object-fit-cover" alt="{{ $blog->title }}" style="height: 200px;">
                                     @else
@@ -141,8 +144,8 @@
                                         </div>
                                     @endif
                                     <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title fw-bold">{{ $blog->title }}</h5>
-                                        <p class="card-text text-muted excerpt">{{ Str::limit(strip_tags($blog->content), 150) }}</p>
+                                        
+                                        <p class="card-text text-muted excerpt">{{ Str::limit($blog->content, 150) }}</p>
                                         <div class="mt-auto">
                                             <small class="text-muted mb-2 d-block">
                                                 By {{ $blog->author }}<br>
@@ -197,6 +200,7 @@
                         @foreach($draftedBlogs as $blog)
                             <div class="col-md-6 col-lg-4">
                                 <div class="card h-100 shadow-lg">
+                                     <h5 class="card-title fw-bold">{{ $blog->title }}</h5>
                                     @if($blog->image)
                                         <img src="{{ Storage::url($blog->image) }}" class="card-img-top w-100 h-100 object-fit-cover" alt="{{ $blog->title }}" style="height: 200px;">
                                     @else
@@ -204,9 +208,8 @@
                                             <i class="bi bi-image fs-1 opacity-75"></i>
                                         </div>
                                     @endif
-                                    <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title fw-bold">{{ $blog->title }}</h5>
-                                        <p class="card-text text-muted excerpt">{{ Str::limit(strip_tags($blog->content), 150) }}</p>
+                        <div class="card-body d-flex flex-column">
+                                        <p class="card-text text-muted excerpt">{{ Str::limit($blog->content, 150) }}</p>
                                         <div class="mt-auto">
                                             <small class="text-muted mb-2 d-block">
                                                 By {{ $blog->author }}<br>
@@ -252,8 +255,8 @@
             </div>
         </div>
 
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-            <a href="{{ route('logout') }}" class="btn btn-outline-light btn-lg rounded-circle" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
+            <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-lg rounded-circle" onclick="event.preventDefault(); Swal.fire({title: 'Are you sure?', text: 'You will be logged out!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6'}).then((result) => { if (result.isConfirmed) { document.getElementById('logout-form').submit(); } })" title="Logout">
                 <i class="bi bi-box-arrow-right"></i>
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>

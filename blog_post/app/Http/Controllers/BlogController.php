@@ -23,18 +23,26 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title'   => 'required|string|max:255',
-            'slug'    => 'nullable|string|max:255|unique:blog_posts,slug',
-            'author'  => 'required|string|max:255',
-            'content' => 'required|string',
+        $rules = [
+            'title'   => 'required|string|min:5|max:255',
+            'slug'    => 'nullable|string|regex:/^[a-z0-9-]+$/|max:255|unique:blog_posts,slug',
+            'author'  => 'required|string|min:2|max:255|alpha',
+'content' => 'required|string|min:10',
             'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status'  => 'required|in:draft,published',
-        ]);
+        ];
+
+        $messages = [
+            'author.alpha' => 'Author name must contain only letters (A-Z, a-z). No numbers or special characters.',
+'title.min' => 'Title must be at least 5 characters long.',
+            'content.min' => 'Content must be at least 10 characters long.',
+            'slug.regex' => 'Slug can only contain lowercase letters, numbers, and hyphens (e.g., my-first-post).',
+        ];
+
+        $request->validate($rules, $messages);
 
         $data = $request->all();
 
-        // WYSIWYG: Allow HTML content
         $data['slug']     = $request->slug ?: Str::slug($request->title);
         $data['user_id']  = Auth::id();
         $data['author_id'] = Auth::id();
@@ -131,18 +139,26 @@ class BlogController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $request->validate([
-            'title'   => 'required|string|max:255',
-            'slug'    => 'nullable|string|max:255|unique:blog_posts,slug,' . $blog->id,
-            'author'  => 'required|string|max:255',
-            'content' => 'required|string',
+        $rules = [
+            'title'   => 'required|string|min:5|max:255',
+            'slug'    => 'nullable|string|regex:/^[a-z0-9-]+$/|max:255|unique:blog_posts,slug,' . $blog->id,
+            'author'  => 'required|string|min:2|max:255|alpha',
+            'content' => 'required|string|min:50',
             'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status'  => 'required|in:draft,published',
-        ]);
+        ];
+
+        $messages = [
+            'author.alpha' => 'Author name must contain only letters (A-Z, a-z). No numbers or special characters.',
+            'title.min' => 'Title must be at least 5 characters long.',
+            'content.min' => 'Content must be at least 50 characters long.',
+            'slug.regex' => 'Slug can only contain lowercase letters, numbers, and hyphens (e.g., my-first-post).',
+        ];
+
+        $request->validate($rules, $messages);
 
         $data = $request->all();
 
-        // WYSIWYG: Allow HTML content
         $data['slug']     = $request->slug ?: Str::slug($request->title);
         $data['author_id'] = Auth::id();
         $data['author']   = $request->author;
@@ -192,9 +208,10 @@ class BlogController extends Controller
     /**
      * Display blog post (own or public read-only).
      */
+
     public function show(BlogPost $blog)
     {
-        if ($blog->status !== 'published') {
+        if ($blog->status !== 'published' && Auth::check() && $blog->user_id !== Auth::id()) {
             abort(403, 'Not published');
         }
 
@@ -202,4 +219,5 @@ class BlogController extends Controller
 
         return view('blogs.show', compact('blog', 'isOwner'));
     }
+
 }

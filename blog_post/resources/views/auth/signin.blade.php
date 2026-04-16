@@ -23,10 +23,19 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
     <h1>Sign In</h1>
     <form action="/login" method="POST">
         @csrf
-        <input type="email" name="email" placeholder="Email" required>
+        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" required>
+                @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
         <div class="input-group position-relative">
             <input type="password" name="password" class="form-control pe-5" placeholder="Password" required>
             <button class="btn btn-link password-toggle position-absolute end-0 top-50 translate-middle-y p-2 text-muted" type="button" style="z-index: 10; line-height: 1; border: none; background: transparent;">

@@ -6,6 +6,8 @@
     <title>{{ $blog->title }} - {{ config('app.name', 'Laravel') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     
     <style>
         body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
@@ -60,7 +62,7 @@
                         </div>
 
                         <div class="content">
-                            {!! $blog->content !!}
+{!! nl2br($blog->content) !!}
                         </div>
                     </div>
                 </div>
@@ -83,8 +85,8 @@
             </div>
         </div>
 
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-            <a href="{{ route('logout') }}" class="btn btn-outline-light btn-lg rounded-circle" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
+            <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-lg rounded-circle" onclick="event.preventDefault(); Swal.fire({title: 'Are you sure?', text: 'You will be logged out!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6'}).then((result) => { if (result.isConfirmed) { document.getElementById('logout-form').submit(); } })" title="Logout">
                 <i class="bi bi-box-arrow-right"></i>
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>

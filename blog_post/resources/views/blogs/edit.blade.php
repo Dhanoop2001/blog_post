@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Blog - {{ config('app.name', 'Laravel') }}</title>
@@ -13,6 +15,8 @@
     </style>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body class="d-flex align-items-center justify-content-center min-vh-100">
     <div class="card p-5 shadow-lg" style="max-width: 900px; width: 100%;">
@@ -79,6 +83,7 @@
                 @error('content') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
+
             <div class="mb-3">
                 <label class="form-label">Status</label>
                 <div class="form-check form-check-inline">
@@ -96,10 +101,9 @@
                 <a href="{{ route('blogs.index') }}" class="btn btn-outline-primary btn-lg">
                     <i class="bi bi-list-ul me-2"></i>View Blogs
                 </a>
-                <a href="{{ route('logout') }}" class="btn btn-outline-secondary btn-lg"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </a>
+                {{-- <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-lg rounded-circle position-fixed top-0 end-0 p-3" style="margin: 1rem;" onclick="event.preventDefault(); Swal.fire({title: 'Are you sure?', text: 'You will be logged out!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6'}).then((result) => { if (result.isConfirmed) { document.getElementById('logout-form').submit(); } })" title="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a> --}}
                 <button type="submit" class="btn btn-primary btn-lg">
                     <i class="bi bi-save"></i> Update Blog Post
                 </button>

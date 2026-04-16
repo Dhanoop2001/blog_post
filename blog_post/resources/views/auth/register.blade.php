@@ -45,6 +45,8 @@
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
                     <div class="position-relative">
                     <input id="password" name="password" type="password" required 
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                           title="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&). Min 8 characters."
                            class="appearance-none rounded-xl relative block w-full px-5 py-3 pe-5 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('password') border-red-500 @enderror form-control
                            shadow-sm sm:text-sm">
                     <button class="btn btn-link password-toggle position-absolute end-0 top-50 translate-middle-y p-2 text-muted" type="button" style="z-index: 10; line-height: 1; border: none; background: transparent;">
@@ -54,6 +56,14 @@
                     @error('password')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
+                    <!-- Password requirements -->
+                    {{-- <ul class="mt-2 text-xs text-gray-500 space-y-1">
+                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>At least 8 characters</li>
+                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>One lowercase letter (a-z)</li>
+                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>One uppercase letter (A-Z)</li>
+                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>One number (0-9)</li>
+                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>One special character (@ $ ! % * ? &)</li>
+                    </ul> --}}
                 </div>
                 <!-- Confirm Password -->
                 <div>
@@ -101,4 +111,3 @@
         </div>
     </body>
 </html>
-

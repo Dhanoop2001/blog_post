@@ -24,9 +24,8 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        // $this->validator($request->all())->validate();
-        //     print_r($request);
-        //     exit;
+        $this->validator($request->all())->validate();
+
         event(new Registered($user = $this->create($request->all())));
 
         // auth()->login($user); // Optional: auto-login after register
@@ -40,9 +39,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'alpha'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$/'],
+        ], [
+            'password.regex' => 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&).',
         ]);
     }
 
@@ -58,4 +59,3 @@ class RegisterController extends Controller
         ]);
     }
 }
-
