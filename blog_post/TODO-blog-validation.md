@@ -1,4 +1,4 @@
-# Blog Creation Validation ✅ COMPLETE
+# Blog Creation Validation ✅ UPDATED: Spaces allowed in author
 
 **Summary:**
 Enhanced validation added to BlogController.php for store() and update():
