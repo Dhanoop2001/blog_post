@@ -26,11 +26,11 @@
                         <a href="{{ route('blogs.index') }}" class="btn btn-outline-light btn-lg me-2">
                             <i class="bi bi-person-lines-fill me-2"></i>My Blogs
                         </a>
-                        @auth
+                        {{-- @auth
                             <a href="{{ route('blog') }}" class="btn btn-primary btn-lg">
                                 <i class="bi bi-plus-circle me-2"></i>New Post
                             </a>
-                        @endauth
+                        @endauth --}}
                     </div>
                 </div>
 
