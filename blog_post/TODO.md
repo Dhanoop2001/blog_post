@@ -1,7 +1,1 @@
-# Task Progress Tracker
-
-## Completed
-- Allow spaces in author validation [IN PROGRESS]
-
-## Pending
-- [ ] Other tasks from TODO files
+# Task: Remove logout button from show.blade.php&#10;&#10;## Steps:&#10;1. [ ] Create this TODO.md file&#10;2. [ ] Edit blog_post/resources/views/blogs/show.blade.php to remove the logout div block&#10;3. [ ] Update this TODO.md with progress&#10;4. [ ] Test and complete&#10;

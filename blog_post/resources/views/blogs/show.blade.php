@@ -85,12 +85,7 @@
             </div>
         </div>
 
-        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
-            <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-lg rounded-circle" onclick="event.preventDefault(); Swal.fire({title: 'Are you sure?', text: 'You will be logged out!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6'}).then((result) => { if (result.isConfirmed) { document.getElementById('logout-form').submit(); } })" title="Logout">
-                <i class="bi bi-box-arrow-right"></i>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
