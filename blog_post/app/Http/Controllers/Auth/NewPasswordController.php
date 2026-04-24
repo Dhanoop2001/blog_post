@@ -14,29 +14,32 @@ use Illuminate\View\View;
 class NewPasswordController extends Controller
 {
     /**
-     * Display the password reset view for the given token.
+     * Display the password reset view.
      */
     public function show(Request $request, string $token): View
     {
-        return view('auth.reset-password', ['token' => $token, 'email' => $request->email ?? '']);
+        return view('auth.reset-password', [
+            'token' => $token,
+            'email' => $request->email
+        ]);
     }
 
     /**
-     * Handle password reset request.
+     * Handle the password reset request.
      */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', 'min:8'],
+            'token'                 => 'required',
+            'email'                 => 'required|email',
+            'password'              => 'required|confirmed|min:8',
         ]);
 
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
+            function ($user) use ($request) {
                 $user->forceFill([
-                    'password' => Hash::make($password)
+                    'password' => Hash::make($request->password),
                 ])->setRememberToken(Str::random(60));
 
                 $user->save();
@@ -45,11 +48,8 @@ class NewPasswordController extends Controller
             }
         );
 
-        if ($status === Password::PASSWORD_RESET) {
-            return redirect('/signin')->with('success', 'Password reset successful!');
-        }
-
-        return back()->withErrors(['email' => [__($status)]]);
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('signin')->with('success', __('Password reset successfully!'))
+            : back()->withErrors(['email' => __($status)]);
     }
 }
-
