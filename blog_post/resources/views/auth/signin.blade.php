@@ -29,7 +29,8 @@
         </div>
     @endif
 
-    <h1>Sign In</h1>
+     <div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <h1 style="text-align: center;">Sign In</h1>
     <form action="/login" method="POST">
         @csrf
         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email Address" value="{{ old('email') }}" required>
@@ -45,10 +46,11 @@
         <button type="submit">Sign In</button>
     </form>
     <p class="mt-2 text-center">
-        <a href="/register" class="font-medium text-indigo-600 hover:text-indigo-500">Create an account</a> | 
-        <a href="/forgot-password" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+        <a href="/register" class="font-medium text-indigo-600 hover:text-indigo-500" style="color: #4f46e5;">Create an account</a> | 
+        <a href="/forgot-password" class="font-medium text-indigo-600 hover:text-indigo-500" style="color: #4f46e5;">Forgot your password?</a>
     </p>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.password-toggle').forEach(function(toggle) {
