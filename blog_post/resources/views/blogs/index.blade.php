@@ -25,12 +25,18 @@
                 <h1 class="display-4 fw-bold text-black mb-0">
                     <i class="bi bi-rss me-3"></i>My Blogs
                 </h1>
-                <a href="{{ route('blog') }}" class="btn btn-primary btn-lg me-2">
-                    <i class="bi bi-plus-circle me-2"></i>New Post
-                </a>
-<a href="{{ route('blogs.all') }}" class="btn btn-outline-dark btn-lg">
-                    <i class="bi bi-globe me-2"></i>All Users Blogs
-                </a>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="{{ route('blog') }}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>New Post
+                    </a>
+                    <a href="{{ route('blogs.all') }}" class="btn btn-outline-dark btn-lg">
+                        <i class="bi bi-globe me-2"></i>All Users Blogs
+                    </a>
+                    <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-sm rounded-circle" onclick="event.preventDefault(); Swal.fire({title: 'Are you sure?', text: 'You will be logged out!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6'}).then((result) => { if (result.isConfirmed) { document.getElementById('logout-form').submit(); } })" title="Logout">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                </div>
             </div>
 
             @if (session('success'))
@@ -258,12 +264,6 @@
 
        
     </div>
-     <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
-            <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-lg rounded-circle" onclick="event.preventDefault(); Swal.fire({title: 'Are you sure?', text: 'You will be logged out!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6'}).then((result) => { if (result.isConfirmed) { document.getElementById('logout-form').submit(); } })" title="Logout">
-                <i class="bi bi-box-arrow-right"></i>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-        </div>
 
     <script>
         // Blog filter functionality
