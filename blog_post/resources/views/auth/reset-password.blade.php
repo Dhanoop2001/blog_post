@@ -48,7 +48,6 @@
             </button>
         </div>
         
-        <input type="password" name="password_confirmation" class="form-control pe-5" placeholder="Confirm Password" required>
         <div class="input-group position-relative">
             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control pe-5" placeholder="Confirm Password" required>
             <button class="btn btn-link password-toggle position-absolute end-0 top-50 translate-middle-y p-2 text-muted" type="button" style="z-index: 10; line-height: 1; border: none; background: transparent;" data-target="#password_confirmation">
@@ -68,7 +67,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.password-toggle').forEach(function(toggle) {
                 toggle.addEventListener('click', function() {
-                    const input = document.querySelector(this.dataset.target || this.parentElement.querySelector('input[type=password]'));
+                    const input = document.querySelector(this.dataset.target) || this.parentElement.querySelector('input');
                     const icon = this.querySelector('i');
                     if (input.type === 'password') {
                         input.type = 'text';

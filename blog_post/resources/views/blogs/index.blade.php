@@ -15,6 +15,7 @@
         .excerpt { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
         .section-title { color: black; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 1rem; margin-bottom: 2rem; }
         .list-card { backdrop-filter: blur(20px); background: rgba(255,255,255,0.15); max-width: 1400px; width: 100%; max-height: 90vh; overflow-y: auto; }
+        .filter-btn:hover { color: white !important; }
     </style>
 </head>
 <body class="d-flex align-items-center justify-content-center min-vh-100 p-3 p-md-5">
@@ -27,7 +28,7 @@
                 <a href="{{ route('blog') }}" class="btn btn-primary btn-lg me-2">
                     <i class="bi bi-plus-circle me-2"></i>New Post
                 </a>
-<a href="{{ route('blogs.all') }}" class="btn btn-outline-dark text-black  btn-lg">
+<a href="{{ route('blogs.all') }}" class="btn btn-outline-dark btn-lg">
                     <i class="bi bi-globe me-2"></i>All Users Blogs
                 </a>
             </div>
@@ -42,7 +43,7 @@
             {{-- Filter Buttons --}}
             <div class="btn-group w-100 mb-5 justify-content-center" role="group">
                 <button type="button" class="btn btn-outline-dark text-black  btn-lg filter-btn section-active" data-target="all-section">
-                    <i class="bi bi-list-ul me-2"></i>All <span class="badge bg-light text-dark ms-1" id="all-count">{{ $allBlogs->total() }}</span>
+                    <i class="bi bi-list-ul me-2"></i>All <span class="badge bg-light text-dark  ms-1" id="all-count">{{ $allBlogs->total() }}</span>
                 </button>
                 <button type="button" class="btn btn-outline-dark text-black  btn-lg filter-btn" data-target="published-section">
                     <i class="bi bi-check-circle me-2 text-success"></i>Published <span class="badge bg-success ms-1" id="published-count">{{ $publishedBlogs->total() }}</span>
@@ -255,13 +256,14 @@
             </div>
         </div>
 
-        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
+       
+    </div>
+     <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
             <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-lg rounded-circle" onclick="event.preventDefault(); Swal.fire({title: 'Are you sure?', text: 'You will be logged out!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6'}).then((result) => { if (result.isConfirmed) { document.getElementById('logout-form').submit(); } })" title="Logout">
                 <i class="bi bi-box-arrow-right"></i>
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
         </div>
-    </div>
 
     <script>
         // Blog filter functionality
