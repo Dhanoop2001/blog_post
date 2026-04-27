@@ -1,113 +1,389 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Sign Up - {{ config('app.name', 'Laravel') }}</title>
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign Up - {{ config('app.name', 'Laravel') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    </head>
-    <body class="antialiased  min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full space-y-8 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8">
-            <div>
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                    Create your account
-                </h2>
-                <p class="mt-2 text-center text-sm text-gray-600">
-                    Or <a href="/signin" class="font-medium text-indigo-600 hover:text-indigo-500">Signin</a>
-                </p>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 16px;
+            background: linear-gradient(135deg, #eef2ff 0%, #ffffff 50%, #f5f3ff 100%);
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 40px 32px;
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .signup-icon {
+            width: 48px;
+            height: 48px;
+            background: #4f46e5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .signup-icon i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .signup-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -0.025em;
+            margin-bottom: 8px;
+        }
+
+        .signup-header p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .signup-header a {
+            color: #4f46e5;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .signup-header a:hover {
+            color: #4338ca;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-danger {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        .alert-danger ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .alert-danger li {
+            margin-bottom: 4px;
+        }
+
+        .alert-danger li:last-child {
+            margin-bottom: 0;
+        }
+
+        .alert-success {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #111827;
+            background: white;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-input.is-invalid {
+            border-color: #ef4444;
+        }
+
+        .form-input.is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .form-input.has-toggle {
+            padding-right: 44px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .password-toggle:hover {
+            color: #6b7280;
+        }
+
+        .error-message {
+            font-size: 13px;
+            color: #dc2626;
+            margin-top: 6px;
+        }
+
+        .hint-text {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background: #4338ca;
+            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4);
+        }
+
+        .submit-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3), 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+        }
+
+        .submit-btn i {
+            font-size: 18px;
+        }
+
+        .terms-text {
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 20px;
+        }
+
+        .terms-text a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .terms-text a:hover {
+            color: #4338ca;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <div class="signup-icon">
+                <i class="bi bi-person-plus-fill"></i>
             </div>
-            <form method="POST" action="{{ route('register') }}" class="mt-8 space-y-6">
-                @csrf
-                <!-- Name -->
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+            <h2>Create your account</h2>
+            <p>Or <a href="/signin">sign in to your existing account</a></p>
+        </div>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+
+            <!-- Name -->
+            <div class="form-group">
+                <label for="name" class="form-label">Full Name</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-person input-icon"></i>
                     <input id="name" name="name" type="text" value="{{ old('name') }}" required 
-                           class="appearance-none rounded-xl relative block w-full px-5 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('name') border-red-500 @enderror
-                           shadow-sm sm:text-sm">
-                    @error('name')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                           placeholder="full name"
+                           class="form-input @error('name') is-invalid @enderror">
                 </div>
-                <!-- Email -->
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                @error('name')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-envelope input-icon"></i>
                     <input id="email" name="email" type="email" value="{{ old('email') }}" required 
-                           class="appearance-none rounded-xl relative block w-full px-5 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('email') border-red-500 @enderror
-                           shadow-sm sm:text-sm">
-                    @error('email')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                           placeholder="email address"
+                           class="form-input @error('email') is-invalid @enderror">
                 </div>
-                <!-- Password -->
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                    <div class="position-relative">
+                @error('email')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-lock input-icon"></i>
                     <input id="password" name="password" type="password" required 
                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                            title="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&). Min 8 characters."
-                           class="appearance-none rounded-xl relative block w-full px-5 py-3 pe-5 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('password') border-red-500 @enderror form-control
-                           shadow-sm sm:text-sm">
-                    <button class="btn btn-link password-toggle position-absolute end-0 top-50 translate-middle-y p-2 text-muted" type="button" style="z-index: 10; line-height: 1; border: none; background: transparent;">
-                        <i class="bi bi-eye fs-6"></i>
+                           placeholder="password"
+                           class="form-input has-toggle @error('password') is-invalid @enderror">
+                    <button type="button" class="password-toggle">
+                        <i class="bi bi-eye"></i>
                     </button>
-                    </div>
-                    @error('password')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    <!-- Password requirements -->
-                    {{-- <ul class="mt-2 text-xs text-gray-500 space-y-1">
-                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>At least 8 characters</li>
-                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>One lowercase letter (a-z)</li>
-                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>One uppercase letter (A-Z)</li>
-                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>One number (0-9)</li>
-                        <li><i class="bi bi-check-lg text-green-500 me-1"></i>One special character (@ $ ! % * ? &)</li>
-                    </ul> --}}
                 </div>
-                <!-- Confirm Password -->
-                <div>
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
-                    <div class="position-relative">
+                @error('password')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
+                <p class="hint-text">Must be at least 8 characters with uppercase, lowercase, number, and special character.</p>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-lock-fill input-icon"></i>
                     <input id="password_confirmation" name="password_confirmation" type="password" required 
-                           class="appearance-none rounded-xl relative block w-full px-5 py-3 pe-5 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm sm:text-sm form-control">
-                    <button class="btn btn-link password-toggle position-absolute end-0 top-50 translate-middle-y p-2 text-muted" type="button" style="z-index: 10; line-height: 1; border: none; background: transparent;">
-                        <i class="bi bi-eye fs-6"></i>
-                    </button>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" 
-                            class="group relative flex w-full justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 shadow-xl">
-                        Sign up
+                           placeholder="password"
+                           class="form-input has-toggle">
+                    <button type="button" class="password-toggle">
+                        <i class="bi bi-eye"></i>
                     </button>
                 </div>
-                @if (session('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl" role="alert">
-                        {{ session('success') }}
-                    </div>
-@endif
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        document.querySelectorAll('.password-toggle').forEach(function(toggle) {
-                            toggle.addEventListener('click', function() {
-                                const input = toggle.parentElement.querySelector('input');
-                                const icon = toggle.querySelector('i');
-                                if (input.type === 'password') {
-                                    input.type = 'text';
-                                    icon.classList.remove('bi-eye');
-                                    icon.classList.add('bi-eye-slash');
-                                } else {
-                                    input.type = 'password';
-                                    icon.classList.add('bi-eye');
-                                    icon.classList.remove('bi-eye-slash');
-                                }
-                            });
-                        });
-                    });
-                </script>
-            </form>
-        </div>
-    </body>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group" style="margin-bottom: 0; margin-top: 24px;">
+                <button type="submit" class="submit-btn">
+                    <i class="bi bi-arrow-right-circle"></i>
+                    Sign up
+                </button>
+            </div>
+
+            <!-- Terms -->
+            <p class="terms-text">
+                By signing up, you agree to our 
+                <a href="#">Terms of Service</a> 
+                and 
+                <a href="#">Privacy Policy</a>.
+            </p>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.password-toggle').forEach(function(toggle) {
+                toggle.addEventListener('click', function() {
+                    const input = toggle.parentElement.querySelector('input');
+                    const icon = toggle.querySelector('i');
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.classList.remove('bi-eye');
+                        icon.classList.add('bi-eye-slash');
+                    } else {
+                        input.type = 'password';
+                        icon.classList.add('bi-eye');
+                        icon.classList.remove('bi-eye-slash');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
 </html>
+
