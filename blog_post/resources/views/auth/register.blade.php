@@ -286,7 +286,7 @@
 
             <!-- Name -->
             <div class="form-group">
-                <label for="name" class="form-label">Full Name</label>
+                <label for="name" class="form-label">full name</label>
                 <div class="input-wrapper">
                     <i class="bi bi-person input-icon"></i>
                     <input id="name" name="name" type="text" value="{{ old('name') }}" required 
@@ -300,7 +300,7 @@
 
             <!-- Email -->
             <div class="form-group">
-                <label for="email" class="form-label">Email Address</label>
+                <label for="email" class="form-label">email address</label>
                 <div class="input-wrapper">
                     <i class="bi bi-envelope input-icon"></i>
                     <input id="email" name="email" type="email" value="{{ old('email') }}" required 
@@ -314,7 +314,7 @@
 
             <!-- Password -->
             <div class="form-group">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">password</label>
                 <div class="input-wrapper">
                     <i class="bi bi-lock input-icon"></i>
                     <input id="password" name="password" type="password" required 
