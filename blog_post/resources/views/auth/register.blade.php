@@ -155,13 +155,14 @@
             gap: 8px;
             transition: all 0.2s;
         }
-        .signin{
+        .signin {
             color: #0a0a0a; 
             font-weight: 500;
             text-decoration: none;
         }
-        .signin:hover
-         { text-decoration: underline; }
+        .signin:hover { 
+            text-decoration: underline; 
+        }
          .btn-primary-custom {
             padding: 12px 20px;
             background: #0a0a0a;
