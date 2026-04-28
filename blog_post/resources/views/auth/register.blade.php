@@ -7,12 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
@@ -20,156 +15,103 @@
             align-items: center;
             justify-content: center;
             padding: 48px 16px;
-            background: linear-gradient(135deg, #eef2ff 0%, #ffffff 50%, #f5f3ff 100%);
+            background: #fafafa;
         }
-
         .signup-container {
             width: 100%;
             max-width: 440px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
             padding: 40px 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
         }
-
         .signup-header {
             text-align: center;
             margin-bottom: 32px;
         }
-
         .signup-icon {
             width: 48px;
             height: 48px;
-            background: #4f46e5;
+            background: #0a0a0a;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
         }
-
-        .signup-icon i {
-            color: white;
-            font-size: 24px;
-        }
-
+        .signup-icon i { color: #ffffff; font-size: 24px; }
         .signup-header h2 {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            color: #111827;
-            letter-spacing: -0.025em;
+            color: #0a0a0a;
+            letter-spacing: -0.02em;
             margin-bottom: 8px;
         }
-
         .signup-header p {
             font-size: 14px;
-            color: #6b7280;
+            color: #737373;
         }
-
         .signup-header a {
-            color: #4f46e5;
-            font-weight: 500;
+            color: #0a0a0a;
+            font-weight: 600;
             text-decoration: none;
-            transition: color 0.2s;
         }
-
-        .signup-header a:hover {
-            color: #4338ca;
-        }
-
+        .signup-header a:hover { text-decoration: underline; }
         .alert {
             padding: 12px 16px;
-            border-radius: 12px;
+            border-radius: 10px;
             margin-bottom: 20px;
             font-size: 14px;
+            border: none;
         }
-
         .alert-danger {
-            background-color: #fef2f2;
-            border: 1px solid #fecaca;
+            background: #fef2f2;
             color: #991b1b;
         }
-
-        .alert-danger ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .alert-danger li {
-            margin-bottom: 4px;
-        }
-
-        .alert-danger li:last-child {
-            margin-bottom: 0;
-        }
-
+        .alert-danger ul { margin: 0; padding-left: 20px; }
+        .alert-danger li { margin-bottom: 4px; }
+        .alert-danger li:last-child { margin-bottom: 0; }
         .alert-success {
-            background-color: #f0fdf4;
-            border: 1px solid #bbf7d0;
+            background: #f0fdf4;
             color: #166534;
         }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .form-group { margin-bottom: 20px; }
         .form-label {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            color: #374151;
+            color: #0a0a0a;
             margin-bottom: 8px;
         }
-
-        .input-wrapper {
-            position: relative;
-        }
-
+        .input-wrapper { position: relative; }
         .input-icon {
             position: absolute;
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: #9ca3af;
+            color: #a3a3a3;
             font-size: 16px;
             pointer-events: none;
         }
-
         .form-input {
             width: 100%;
             padding: 12px 16px 12px 40px;
-            border: 1px solid #d1d5db;
-            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
             font-size: 14px;
-            color: #111827;
-            background: white;
+            color: #0a0a0a;
+            background: #ffffff;
             transition: all 0.2s;
             outline: none;
         }
-
-        .form-input::placeholder {
-            color: #9ca3af;
-        }
-
+        .form-input::placeholder { color: #a3a3a3; }
         .form-input:focus {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            border-color: #0a0a0a;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
         }
-
-        .form-input.is-invalid {
-            border-color: #ef4444;
-        }
-
-        .form-input.is-invalid:focus {
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-        }
-
-        .form-input.has-toggle {
-            padding-right: 44px;
-        }
-
+        .form-input.is-invalid { border-color: #ef4444; }
+        .form-input.has-toggle { padding-right: 44px; }
         .password-toggle {
             position: absolute;
             right: 12px;
@@ -177,7 +119,7 @@
             transform: translateY(-50%);
             background: none;
             border: none;
-            color: #9ca3af;
+            color: #a3a3a3;
             cursor: pointer;
             padding: 4px;
             font-size: 16px;
@@ -186,31 +128,25 @@
             justify-content: center;
             transition: color 0.2s;
         }
-
-        .password-toggle:hover {
-            color: #6b7280;
-        }
-
+        .password-toggle:hover { color: #737373; }
         .error-message {
             font-size: 13px;
             color: #dc2626;
             margin-top: 6px;
         }
-
         .hint-text {
             font-size: 12px;
-            color: #6b7280;
+            color: #737373;
             margin-top: 6px;
         }
-
         .submit-btn {
             width: 100%;
             padding: 14px 24px;
-            background: #4f46e5;
-            color: white;
+            background: #0a0a0a;
+            color: #ffffff;
             border: none;
-            border-radius: 12px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -218,41 +154,32 @@
             justify-content: center;
             gap: 8px;
             transition: all 0.2s;
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-            position: relative;
-            overflow: hidden;
         }
-
-        .submit-btn:hover {
-            background: #4338ca;
-            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4);
+        .signin{
+            color: #0a0a0a; 
+            font-weight: 500;
+            text-decoration: none;
         }
-
-        .submit-btn:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3), 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-        }
-
-        .submit-btn i {
-            font-size: 18px;
-        }
-
+        .signin:hover
+         { text-decoration: underline; }
+         .btn-primary-custom {
+            padding: 12px 20px;
+            background: #0a0a0a;
+            color: #ffffff;
+         }
+        .submit-btn:hover { background: #262626; }
         .terms-text {
             text-align: center;
             font-size: 12px;
-            color: #6b7280;
+            color: #737373;
             margin-top: 20px;
         }
-
         .terms-text a {
-            color: #4f46e5;
+            color: #0a0a0a;
             text-decoration: none;
             font-weight: 500;
         }
-
-        .terms-text a:hover {
-            color: #4338ca;
-        }
+        .terms-text a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -262,7 +189,6 @@
                 <i class="bi bi-person-plus-fill"></i>
             </div>
             <h2>Create your account</h2>
-            <p>Or <a href="/signin">sign in to your existing account</a></p>
         </div>
 
         @if ($errors->any())
@@ -284,13 +210,12 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Name -->
             <div class="form-group">
-                <label for="name" class="form-label">full name</label>
+                <label for="name" class="form-label">Full name</label>
                 <div class="input-wrapper">
                     <i class="bi bi-person input-icon"></i>
                     <input id="name" name="name" type="text" value="{{ old('name') }}" required 
-                           placeholder="full name"
+                           placeholder="Full name"
                            class="form-input @error('name') is-invalid @enderror">
                 </div>
                 @error('name')
@@ -298,13 +223,12 @@
                 @enderror
             </div>
 
-            <!-- Email -->
             <div class="form-group">
-                <label for="email" class="form-label">email address</label>
+                <label for="email" class="form-label">Email address</label>
                 <div class="input-wrapper">
                     <i class="bi bi-envelope input-icon"></i>
                     <input id="email" name="email" type="email" value="{{ old('email') }}" required 
-                           placeholder="email address"
+                           placeholder="Email address"
                            class="form-input @error('email') is-invalid @enderror">
                 </div>
                 @error('email')
@@ -312,15 +236,14 @@
                 @enderror
             </div>
 
-            <!-- Password -->
             <div class="form-group">
-                <label for="password" class="form-label">password</label>
+                <label for="password" class="form-label">Password</label>
                 <div class="input-wrapper">
                     <i class="bi bi-lock input-icon"></i>
                     <input id="password" name="password" type="password" required 
                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                            title="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&). Min 8 characters."
-                           placeholder="password"
+                           placeholder="Password"
                            class="form-input has-toggle @error('password') is-invalid @enderror">
                     <button type="button" class="password-toggle">
                         <i class="bi bi-eye"></i>
@@ -332,13 +255,12 @@
                 <p class="hint-text">Must be at least 8 characters with uppercase, lowercase, number, and special character.</p>
             </div>
 
-            <!-- Confirm Password -->
             <div class="form-group">
                 <label for="password_confirmation" class="form-label">Confirm Password</label>
                 <div class="input-wrapper">
                     <i class="bi bi-lock-fill input-icon"></i>
                     <input id="password_confirmation" name="password_confirmation" type="password" required 
-                           placeholder="password"
+                           placeholder="Confirm password"
                            class="form-input has-toggle">
                     <button type="button" class="password-toggle">
                         <i class="bi bi-eye"></i>
@@ -346,7 +268,6 @@
                 </div>
             </div>
 
-            <!-- Submit Button -->
             <div class="form-group" style="margin-bottom: 0; margin-top: 24px;">
                 <button type="submit" class="submit-btn">
                     <i class="bi bi-arrow-right-circle"></i>
@@ -354,7 +275,11 @@
                 </button>
             </div>
 
-            <!-- Terms -->
+            <div class="auth-footer" style="text-align: center; margin-top: 20px; font-size: 14px; color: #737373;">
+                <p style="margin-bottom: 4px;">Already have an account?</p>
+                <a href="/signin" class="signin">Sign in to your existing account</a>
+            </div>
+
             <p class="terms-text">
                 By signing up, you agree to our 
                 <a href="#">Terms of Service</a> 

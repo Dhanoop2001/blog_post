@@ -4,53 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Sign In</title>
+    <title>Sign In - {{ config('app.name', 'Laravel') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; padding: 20px; }
-        .alert { padding: 10px; margin-bottom: 20px; border-radius: 4px; }
-        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        form { display: flex; flex-direction: column; }
-        input { margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px;  }
-        button { padding: 10px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #fafafa;
+            color: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 16px;
+        }
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .auth-icon {
+            width: 48px;
+            height: 48px;
+            background: #0a0a0a;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .auth-icon i { color: #ffffff; font-size: 22px; }
+        .auth-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        .auth-header p {
+            font-size: 14px;
+            color: #737373;
+        }
+        .auth-header a {
+            color: #0a0a0a;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .auth-header a:hover { text-decoration: underline; }
+        .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: none;
+        }
+        .alert-success { background: #f0fdf4; color: #166534; }
+        .alert-danger { background: #fef2f2; color: #991b1b; }
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0a0a0a;
+            margin-bottom: 8px;
+        }
+        .form-control-custom {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #0a0a0a;
+            background: #ffffff;
+            transition: all 0.2s;
+            outline: none;
+        }
+        .form-control-custom::placeholder { color: #a3a3a3; }
+        .form-control-custom:focus {
+            border-color: #0a0a0a;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+        }
+        .form-control-custom.is-invalid { border-color: #ef4444; }
+        .invalid-feedback { font-size: 13px; color: #dc2626; margin-top: 6px; }
+        .input-group-wrap { position: relative; }
+        .input-group-wrap .form-control-custom { padding-right: 44px; }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #a3a3a3;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+        .password-toggle:hover { color: #737373; }
+        .submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: #0a0a0a;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .submit-btn:hover { background: #262626; }
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #737373;
+        }
+        .auth-footer a {
+            color: #0a0a0a;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .auth-footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-icon">
+                <i class="bi bi-box-arrow-in-right"></i>
+            </div>
+            <h1>Welcome back</h1>
         </div>
-    @endif
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            {{ $errors->first() }}
-        </div>
-    @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-     <div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <h1 style="text-align: center;">Sign In</h1>
-    <form action="/login" method="POST">
-        @csrf
-        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email Address" value="{{ old('email') }}" required>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
+        <form action="/login" method="POST">
+            @csrf
+            <div class="form-group">
+                <label class="form-label">Email address</label>
+                <input type="email" name="email" class="form-control-custom @error('email') is-invalid @enderror" placeholder="you@example.com" value="{{ old('email') }}" required>
                 @error('email')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-        <div class="input-group position-relative">
-            <input type="password" name="password" class="form-control pe-5" placeholder="Password" required>
-            <button class="btn btn-link password-toggle position-absolute end-0 top-50 translate-middle-y p-2 text-muted" type="button" style="z-index: 10; line-height: 1; border: none; background: transparent;">
-                <i class="bi bi-eye fs-6"></i>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="input-group-wrap">
+                    <input type="password" name="password" class="form-control-custom" placeholder="Enter your password" required>
+                    <button type="button" class="password-toggle">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="bi bi-arrow-right-circle"></i> Sign In
             </button>
+        </form>
+
+        <div class="auth-footer">
+            <p style="color: #737373; margin-bottom: 4px;"><a href="/forgot-password">Forgot your password?</a></p>
+            <p style="color: #737373; margin-bottom: 4px; margin-top: 12px;">Don't have an account?</p>
+            <a href="/register">Create a new account</a>
         </div>
-        <button type="submit">Sign In</button>
-    </form>
-    <p class="mt-2 text-center">
-        <a href="/register" class="font-medium text-indigo-600 hover:text-indigo-500" style="color: #4f46e5;">Create an account</a> | 
-        <a href="/forgot-password" class="font-medium text-indigo-600 hover:text-indigo-500" style="color: #4f46e5;">Forgot your password?</a>
-    </p>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.password-toggle').forEach(function(toggle) {
@@ -72,3 +219,4 @@
     </script>
 </body>
 </html>
+
