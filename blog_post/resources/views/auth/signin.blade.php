@@ -27,10 +27,36 @@
             border-radius: 16px;
             padding: 40px 32px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+            animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .auth-card.shake {
+            animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(10, 10, 10, 0.15); }
+            70% { box-shadow: 0 0 0 12px rgba(10, 10, 10, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(10, 10, 10, 0); }
         }
         .auth-header {
             text-align: center;
             margin-bottom: 32px;
+            animation: fadeInUp 0.6s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .auth-icon {
             width: 48px;
@@ -41,6 +67,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
+            animation: pulseGlow 2.5s infinite;
         }
         .auth-icon i { color: #ffffff; font-size: 22px; }
         .auth-header h1 {
@@ -90,8 +117,38 @@
         .form-control-custom::placeholder { color: #a3a3a3; }
         .form-control-custom:focus {
             border-color: #0a0a0a;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.06);
+            transform: translateY(-1px);
         }
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .form-group:nth-of-type(1) { animation-delay: 0.25s; }
+        .form-group:nth-of-type(2) { animation-delay: 0.35s; }
+        .submit-btn-wrap {
+            animation: fadeInUp 0.5s 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .auth-footer {
+            animation: fadeInUp 0.5s 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .submit-btn.loading {
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        .submit-btn .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        .submit-btn.loading .spinner { display: inline-block; }
+        .submit-btn.loading .btn-text { display: none; }
+        .submit-btn.loading .btn-icon { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .form-control-custom.is-invalid { border-color: #ef4444; }
         .invalid-feedback { font-size: 13px; color: #dc2626; margin-top: 6px; }
         .input-group-wrap { position: relative; }
@@ -145,7 +202,7 @@
     </style>
 </head>
 <body>
-    <div class="auth-card">
+    <div class="auth-card @if($errors->any()) shake @endif">
         <div class="auth-header">
             <div class="auth-icon">
                 <i class="bi bi-box-arrow-in-right"></i>
@@ -165,7 +222,7 @@
             </div>
         @endif
 
-        <form action="/login" method="POST">
+        <form id="signin-form" action="/login" method="POST">
             @csrf
             <div class="form-group">
                 <label class="form-label">Email address</label>
@@ -185,9 +242,13 @@
                 </div>
             </div>
 
-            <button type="submit" class="submit-btn">
-                <i class="bi bi-arrow-right-circle"></i> Sign In
-            </button>
+            <div class="submit-btn-wrap">
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    <i class="bi bi-arrow-right-circle btn-icon"></i>
+                    <span class="btn-text">Sign In</span>
+                    <span class="spinner"></span>
+                </button>
+            </div>
         </form>
 
         <div class="auth-footer">
@@ -200,6 +261,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Password toggle
             document.querySelectorAll('.password-toggle').forEach(function(toggle) {
                 toggle.addEventListener('click', function() {
                     const input = this.parentElement.querySelector('input');
@@ -215,6 +277,16 @@
                     }
                 });
             });
+
+            // Form loading state
+            const form = document.getElementById('signin-form');
+            const submitBtn = document.getElementById('submit-btn');
+            if (form && submitBtn) {
+                form.addEventListener('submit', function() {
+                    submitBtn.classList.add('loading');
+                    submitBtn.disabled = true;
+                });
+            }
         });
     </script>
 </body>

@@ -537,6 +537,21 @@
                     document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
                 });
             });
+
+            @if (session('welcome'))
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '{{ session('welcome') }}',
+                    showConfirmButton: false,
+                    timer: 3500,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'rounded-3 shadow-sm'
+                    }
+                });
+            @endif
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
