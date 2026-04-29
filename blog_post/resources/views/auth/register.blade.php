@@ -9,12 +9,12 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body.bg {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n            background-image: url('/blue-vintage-decorative-balls-background.jpg');\n            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 48px 16px;
-            background-attachment: fixed;
         }
         .signup-container {
             width: 100%;
@@ -323,4 +323,3 @@
     </script>
 </body>
 </html>
-

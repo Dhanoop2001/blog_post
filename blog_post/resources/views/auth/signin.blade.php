@@ -11,7 +11,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body.bg {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-
             color: #0a0a0a;
             min-height: 100vh;
             display: flex;
@@ -302,4 +301,3 @@
     </script>
 </body>
 </html>
-
