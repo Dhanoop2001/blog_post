@@ -9,6 +9,11 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body.bg {
+            
+            background-image: url("../images/blue-vintage-decorative-balls-background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
             display: flex;
