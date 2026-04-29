@@ -8,14 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            min-height: 100vh;
+        body.bg {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n            background-image: url('/blue-vintage-decorative-balls-background.jpg');\n            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 48px 16px;
-            background: linear-gradient(135deg, grey 0%, white 100%);
             background-attachment: fixed;
         }
         .signup-container {
@@ -196,7 +194,7 @@
         .terms-text a:hover { text-decoration: underline; }
     </style>
 </head>
-<body>
+<body class="bg">
     <div class="signup-container">
         <div class="signup-header">
             <div class="signup-icon">
