@@ -15,16 +15,24 @@
             align-items: center;
             justify-content: center;
             padding: 48px 16px;
-            background: #fafafa;
+            background: linear-gradient(135deg, grey 0%, white 100%);
+            background-attachment: fixed;
         }
         .signup-container {
             width: 100%;
             max-width: 440px;
-            background: #ffffff;
-            border: 1px solid #e5e5e5;
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
             padding: 40px 32px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 4px 20px rgba(0,0,0,0.05) inset;
+            transition: all 0.3s ease;
+        }
+        .signup-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 6px 24px rgba(0,0,0,0.08) inset;
         }
         .signup-header {
             text-align: center;
@@ -97,18 +105,23 @@
         .form-input {
             width: 100%;
             padding: 12px 16px 12px 40px;
-            border: 1px solid #e5e5e5;
-            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
             font-size: 14px;
             color: #0a0a0a;
-            background: #ffffff;
-            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
             outline: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         .form-input::placeholder { color: #a3a3a3; }
         .form-input:focus {
-            border-color: #0a0a0a;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2), 0 4px 12px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-1px);
         }
         .form-input.is-invalid { border-color: #ef4444; }
         .form-input.has-toggle { padding-right: 44px; }

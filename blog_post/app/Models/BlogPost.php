@@ -52,4 +52,3 @@ class BlogPost extends Model
 
 
 }
-
